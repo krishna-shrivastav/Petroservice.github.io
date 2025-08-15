@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petro-Service - List Your Need</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4776E6;
+      --primary-gradient: linear-gradient(135deg, #4776E6 0%, #8E54E9 100%);
+      --secondary: #FF8C42;
+      --text-dark: #2D3748;
+      --text-light: #718096;
+      --white: #ffffff;
+      --off-white: #F7FAFC;
+      --error: #FF5757;
+      --success: #00C49A;
+      --border-radius: 12px;
+      --shadow: 0 10px 30px rgba(71, 118, 230, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .navbar {
+      background: var(--white);
+      padding: 15px 30px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      color: var(--text-dark);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo span {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-icon {
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+    }
+
+    .nav-link.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .nav-link.highlight {
+      background: var(--primary-gradient);
+      color: var(--white);
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(71, 118, 230, 0.2);
+    }
+
+    .nav-link.highlight:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(71, 118, 230, 0.3);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-title h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .page-title p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .task-form-container {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+
+    .form-title {
+      margin-bottom: 25px;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-title i {
+      color: var(--primary);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .input-group {
+      margin-bottom: 5px;
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .required::after {
+      content: "*";
+      color: var(--error);
+      margin-left: 2px;
+    }
+
+    .input-field,
+    .textarea-field,
+    .select-field {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .input-field:focus,
+    .textarea-field:focus,
+    .select-field:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(71, 118, 230, 0.1);
+    }
+
+    .textarea-field {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(71, 118, 230, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(71, 118, 230, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--text-dark);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-secondary:hover {
+      background: #f8f8f8;
+    }
+
+    .task-categories {
+      margin-top: 40px;
+    }
+
+    .category-title {
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .category-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      padding: 25px 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(71, 118, 230, 0.15);
+    }
+
+    .category-icon {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .category-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .category-desc {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted var(--text-light);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-left: 5px;
+      cursor: help;
+    }
+
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 8px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.75rem;
+      font-weight: normal;
+    }
+
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .reward-field {
+      display: flex;
+      align-items: center;
+    }
+
+    .reward-field input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .reward-field select {
+      width: auto;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: none;
+    }
+
+    .price-range {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price-range span {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .help-text {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 5px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .checkbox-group input {
+      margin-top: 5px;
+    }
+
+    .checkbox-group label {
+      font-size: 0.9rem;
+    }
+
+    .checkbox-group a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .checkbox-group a:hover {
+      text-decoration: underline;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .alert-info {
+      background: rgba(71, 118, 230, 0.1);
+      border-left: 4px solid var(--primary);
+    }
+
+    .alert-icon {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .alert-content h4 {
+      margin-bottom: 5px;
+      font-size: 1rem;
+    }
+
+    .alert-content p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-footer {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .form-footer button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+        font-size: 1.5rem;
+        color: var(--text-dark);
+        cursor: pointer;
+      }
+
+      .page-title h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <nav class="navbar">
+    <a href="#" class="logo">
+      <i class="fas fa-route logo-icon"></i>
+      Get<span>NGo</span>
+    </a>
+    <div class="nav-links">
+      <a href="#" class="nav-link">Home</a>
+      <a href="#" class="nav-link">Find Tasks</a>
+      <a href="#" class="nav-link active">List a Need</a>
+      <a href="#" class="nav-link">How It Works</a>
+      <a href="#" class="nav-link highlight"><i class="fas fa-plus"></i> List Task</a>
+    </div>
+    <div class="user-menu">
+      <div class="user-avatar">AM</div>
+      <i class="fas fa-chevron-down" style="font-size: 0.7rem; color: var(--text-light);"></i>
+    </div>
+    <div class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav> -->
+
+  <div class="container">
+    <div class="page-title">
+      <h1>List Your Need</h1>
+      <p>Tell us what you need help with and let our community come to your rescue. Be specific to get matched with the
+        right helper.</p>
+    </div>
+
+    <div class="alert alert-info">
+      <div class="alert-icon">
+        <i class="fas fa-info-circle"></i>
+      </div>
+      <div class="alert-content">
+        <h4>For Better Results</h4>
+        <p>Be as specific as possible about what you need, when you need it, and how much you're willing to reward your
+          helper. Clear details mean faster help!</p>
+      </div>
+    </div>
+
+    <div class="task-form-container">
+      <h2 class="form-title"><i class="fas fa-clipboard-list"></i> Task Details</h2>
+
+      <form id="task-form" method="post" action="/addtask" enctype="multipart/form-data">
+        <div class="form-grid">
+
+          <div class="input-group full-width">
+            <label class="input-label required" for="task-title">Task Title</label>
+            <input type="text" id="task-title" name="task-title" class="input-field"
+              placeholder="E.g., Petrol , Diesel needed" required>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label required" for="task-category">Task Category</label>
+            <select id="task-category" name="task-category" class="select-field" required>Select a category
+              <option value="" disabled selected>Select a category</option>
+             <!--<option value="groceries">Groceries & Essentials</option>
+              <option value="pharmacy">Pharmacy & Medicine</option>
+              <option value="cash">Cash Exchange</option>
+              <option value="books">Books & Stationery</option>
+              <option value="tech">Electronics & Tech</option>
+              <option value="food">Food Delivery</option>-->
+
+              <option value="food">Fuels</option>
+              <option value="food">Vehicles Components</option>
+              <option value="other">Vehicles Repair Mechanic</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label required" for="task-urgency">Urgency Level</label>
+            <select id="task-urgency" name="task-urgency" class="select-field" required>
+              <option value="" disabled selected>How soon do you need it?</option>
+              <option value="immediate">Immediate (1-2 hours)</option>
+              <option value="today">Today</option>
+              <option value="tomorrow">Tomorrow</option>
+              <option value="week">This week</option>
+              <option value="flexible">Flexible</option>
+            </select>
+          </div>
+
+          <div class="input-group full-width">
+            <label class="input-label required" for="task-description">Task Description</label>
+            <textarea id="task-description" name="task-description" class="textarea-field"
+              placeholder="Describe exactly what you need." required></textarea>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label required" for="task-location">Your Location</label>
+            <input type="text" id="task-location" name="task-location" class="input-field"
+              placeholder="Your address or area" required>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label required" for="task-date">Preferred Date</label>
+            <input type="date" id="task-date" name="task-date" class="input-field" required>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label required" for="task-time">Preferred Time</label>
+            <input type="time" id="task-time" name="task-time" class="input-field" required>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label required" for="reward-amount">Helper Reward</label>
+            <div class="reward-field">
+              <input type="number" id="reward-amount" name="reward-amount" class="input-field" placeholder="0.00"
+                min="1" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label" for="task-budget">Item Budget (Optional)</label>
+            <div class="reward-field">
+              <input type="number" id="task-budget" name="task-budget" class="input-field" placeholder="0.00" min="0">
+            </div>
+          </div>
+
+          <div class="input-group full-width">
+            <label class="input-label" for="task-photo">Add Photos (Optional)</label>
+            <input type="file" id="task-photo" name="task-photo" accept="image/*" multiple>
+          </div>
+
+          <div class="input-group full-width">
+            <label class="input-label" for="special-instructions">Special Instructions (Optional)</label>
+            <textarea id="special-instructions" name="special-instructions" class="textarea-field"
+              placeholder="Any extra info?"></textarea>
+          </div>
+
+          <div class="input-group full-width">
+            <div class="checkbox-group">
+              <input type="checkbox" id="terms-conditions" name="terms-conditions" required>
+              <label for="terms-conditions">I agree to the <a href="#">Terms</a>, <a href="#">Privacy Policy</a>, and <a
+                  href="#">Guidelines</a>.</label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-footer">
+          <button type="button" class="btn btn-secondary"><i class="fas fa-save"></i> Save as Draft</button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Post Task Now</button>
+        </div>
+      </form>
+
+    </div>
+
+    <div class="task-categories">
+      <h3 class="category-title">Common Task Categories</h3>
+      <div class="category-grid">
+        <div class="category-card" onclick="selectCategory('Fuels')">
+          <div class="category-icon">
+            <i class="fas fa-oil-can"></i>
+          </div>
+          <div class="category-name">Fuels</div>
+          <div class="category-desc">Petrol , Diesel , mobil oil </div>
+        </div>
+
+        <div class="category-card" onclick="selectCategory('Vehicles Components')">
+          <div class="category-icon">
+            <i class="fas fa-car"></i>
+            <i class="fa-solid fa-tire"></i>
+          </div>
+          <div class="category-name">Vehicles Components</div>
+          <div class="category-desc">Tyres , Tubes ,</div>
+        </div>
+
+        <div class="category-card" onclick="selectCategory('Vehicles Repair')">
+          <div class="category-icon">
+            <i class="fas fa-tools"></i>
+          </div>
+          <div class="category-name">Vehicles Repair Mechanic</div>
+          <div class="category-desc">For your helper to repair your vehicle</div>
+        </div>
+
+       <!--<div class="category-card" onclick="selectCategory('books')">
+          <div class="category-icon">
+            <i class="fas fa-book"></i>
+          </div>
+          <div class="category-name">Books</div>
+          <div class="category-desc">Books, stationery, prints</div>
+        </div>
+
+        <div class="category-card" onclick="selectCategory('tech')">
+          <div class="category-icon">
+            <i class="fas fa-laptop"></i>
+          </div>
+          <div class="category-name">Electronics</div>
+          <div class="category-desc">Tech items, gadgets, accessories</div>
+        </div>
+
+        <div class="category-card" onclick="selectCategory('food')">
+          <div class="category-icon">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <div class="category-name">Food Delivery</div>
+          <div class="category-desc">Restaurant orders, home-cooked meals</div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Form validation and submission
+    // document.getElementById('task-form').addEventListener('submit', function(e) {
+    //   e.preventDefault();
+
+    //   // Basic validation
+    //   const title = document.getElementById('task-title').value;
+    //   const category = document.getElementById('task-category').value;
+    //   const description = document.getElementById('task-description').value;
+
+    //   if (!title || !category || !description) {
+    //     alert('Please fill all required fields');
+    //     return;
+    //   }
+
+    //   // Show success message (in a real app, this would submit the form)
+    //   alert('Your task has been successfully posted! Nearby helpers will be notified.');
+
+    //   // Reset form
+    //   this.reset();
+    // });
+
+    // Function to select category from the cards
+    function selectCategory(category) {
+      const categorySelect = document.getElementById('task-category');
+
+      // Set the selected value
+      categorySelect.value = category;
+
+      // Scroll to form
+      document.querySelector('.task-form-container').scrollIntoView({
+        behavior: 'smooth'
+      });
+
+      // Focus on title field
+      setTimeout(() => {
+        document.getElementById('task-title').focus();
+      }, 600);
+    }
+
+    // Initialize today's date as default
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    document.getElementById('task-date').value = formattedDate;
+  </script>
+</body>
+
+</html>
